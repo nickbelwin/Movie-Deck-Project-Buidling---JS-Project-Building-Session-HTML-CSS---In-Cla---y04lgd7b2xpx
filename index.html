@@ -10,36 +10,36 @@
 </head>
 
 <body>
-    <header id="head">
-        <h1><a href="">Movie Deck</a></h1>
-    </header>
-    <div class="filter">
-        <div class="search">
-            <input id="searching" oninput="searchData()" type="text" placeholder="Search by name…" autocomplete="off">
-            <button onclick="search()">Search</button>
+    <div id="main">
+        <header id="head">
+            <h1><a href="">Movie Deck</a></h1>
+        </header>
+        <div class="filter">
+            <div class="search">
+                <input id="searching" oninput="searchData()" type="text" placeholder="Search by name…" autocomplete="off">
+                <button onclick="search()">Search</button>
+            </div>
+            <div class="sorting">
+                <button onclick="sortByD()">Sort by date (oldest to latest)</button>
+                <button onclick="sortByR()">Sort by rating (least to most)</button>
+            </div>
         </div>
-        <div class="sorting">
-            <button onclick="sortByD()">Sort by date (oldest to latest)</button>
-            <button onclick="sortByR()">Sort by rating (least to most)</button>
+        <div class="btn">
+            <button class="active-tab" onclick="allMovie()">All</button>
+            <button onclick="favoriteMovie()">Favorites</button>
         </div>
+        <ul id="movie-list">  
+    
+        </ul>
+        <div class="pagination">
+            <button id="backbtn">Previous</button>
+            <button id="pageNum">Current Page: 1</button>
+            <button id="nextbtn"><a href="#head">Next</a></button>
+        </div>
+        <footer>
+            <p>© 2023 Movie Deck</p>
+        </footer>
     </div>
-    <div class="btn">
-        <button class="active-tab" onclick="allMovie()">All</button>
-        <button onclick="favoriteMovie()">Favorites</button>
-    </div>
-    <ul id="movie-list">
-        
-           
-
-    </ul>
-    <div class="pagination">
-        <button id="backbtn">Previous</button>
-        <button id="pageNum">Current Page: 1</button>
-        <button id="nextbtn"><a href="#head">Next</a></button>
-    </div>
-    <footer>
-        <p>© 2023 Movie Deck</p>
-    </footer>
 
 
     <script src="App.js"></script>

@@ -36,6 +36,12 @@ async function getMovie() {
 function allMovie(movieData) {
     console.log(movieData);
     movieList.innerHTML = "";
+    if(pageNumber===1){
+        document.getElementById("backbtn").disabled = true;
+    }
+    else{
+        document.getElementById("backbtn").disabled = false;
+    }
     movieData.forEach((val) => {
         movieList.innerHTML += `<li>
         <div class="movie-card" >
@@ -56,6 +62,9 @@ const backbtn = document.getElementById("backbtn");
 nextbtn.addEventListener("click", () => {
     if (pageNumber >= 1 && pageNumber < 3) {
         pageNumber = pageNumber + 1;
+        if(pageNumber===1){
+            document.getElementById("backbtn").disabled = true;
+        }
     }
     document.getElementById("pageNum").innerText = `Current Page: ${pageNumber}`;
     getMovie();
@@ -107,13 +116,12 @@ function showData(page) {
                     </div>
                 </li>`              
                 }
-                else{
-                    movieList.innerHTML=`<div class="notFound">Result not found !!!</div>`;
-                }
             }
         }
-    })
-    
+    });
+    if(movieList.innerHTML===""){
+        movieList.innerHTML=`<div class="notFound">Result not found !!!</div>`;
+    }
 }
 
 function searchData() {
@@ -134,6 +142,8 @@ function search() {
 window.addEventListener("click",()=>{
     document.getElementById("searching").classList.remove("searchtag")
 })
+
+// fevorite list of movie----------------------------------------
 
 
 
