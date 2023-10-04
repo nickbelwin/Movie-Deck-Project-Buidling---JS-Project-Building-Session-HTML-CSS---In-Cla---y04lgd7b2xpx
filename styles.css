@@ -11,8 +11,9 @@ html,body{
 }
 header{
     padding: 0vw 8vw;
-    background-color: rgba(18, 2, 71, 0.272);
+    background-color: rgba(12, 1, 52, 0.534);
     margin-bottom: 1rem;
+    box-shadow: rgb(10, 0, 255) 0px 15px 35px -5px;
 }
 header h1 a{
     font-family: "Fuggles";
@@ -22,6 +23,7 @@ header h1 a{
     font-size: 4rem;
 }
 .filter{
+    margin-top: 2rem;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -56,20 +58,41 @@ header h1 a{
     border: 2px solid rgb(250, 143, 3);
 }
 .btn{
+    display: flex;
     margin: 30px 0 30px 50px;
 }
-.btn button:nth-child(2){
+#back{
+    cursor: pointer;
+    display: none;
     padding: 8px 2rem;
     font-weight: 600;
-    border: none;
     border-radius: 5px;
+    transition: .5s;
+}
+#back:hover{
+    background-color: rgb(250, 143, 3);
+}
+#like{
+    margin-left: 30px;
+}
+.btnn{
+    cursor: pointer;
+    padding: 8px 2rem;
+    font-weight: 600;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 2px solid rgb(250, 143, 3);
+    color: white;
+
 }
 .active-tab{
+    background-color: rgb(250, 143, 3);
+    
+}
+#all{
     border: 2px solid rgb(250, 143, 3);
     padding: 8px 4rem;
     font-weight: 600;
-    background-color: rgb(250, 143, 3);
-    color: white;
     border-radius: 5px;
 }
 #movie-list{
@@ -94,6 +117,33 @@ header h1 a{
     text-transform: uppercase;
     background-color: rgb(96, 1, 1);
 }
+
+.movie-info{
+    cursor: context-menu;
+    color: white;
+    position: relative;
+    width: 100vh;
+    margin-bottom: 2rem;
+}
+.movie-info img{
+    width: 100%;
+}
+.pic-info{
+    text-align: justify;
+    width: 80%;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.444);
+    position: absolute;
+    bottom: 3%;
+    left: 1%;
+}
+.pic-info h3, .pic-info h4{
+    color: rgb(255, 170, 0);
+}
+.pic-info p{
+    margin: .5rem 0;
+    color: rgb(255, 255, 255);
+}
 .movie-card{
     color: white;
     cursor: pointer;
@@ -107,6 +157,9 @@ header h1 a{
     border: 3px solid transparent;
     transition: .8s;
 }
+.addedDate{
+    height: 21rem;
+}
 .movie-card:hover{
     border: 3px solid rgb(226, 130, 4);
 }
@@ -118,12 +171,12 @@ header h1 a{
     
 }
 .heart i{
-    background-color: pink;
+    /* background-color: pink; */
     border-radius: 50%;
 }
-.love{
+/* .love{
     color: palevioletred;
-}
+} */
 .movie-card img{
     height: 15rem;
     width: 13rem;
@@ -159,9 +212,10 @@ header h1 a{
     border-radius: 5px;
     border: 2px solid transparent;
 }
-
-#nextbtn:hover{
+#nextbtn, #backbtn{
     cursor: pointer;
+}
+.next:hover{
     background-color: rgb(250, 143, 3);
     border: 2px solid rgb(250, 143, 3);
 }
@@ -170,20 +224,44 @@ header h1 a{
     color: black;
     padding: 1vh 2vw;
 }
-#backbtn:hover{
+.prev:hover{
     cursor: pointer;
     background-color: rgb(250, 143, 3);
     border: 2px solid rgb(250, 143, 3);
 }
 footer{
     padding: 15px;
-    background-color: rgb(56, 56, 56);
+    background-color: rgb(2, 1, 71);
     color: white;
     font-weight: 800;
     text-align: center;
+    margin-top: 2rem;
 }
 
 @media only screen and (max-width: 540px){
+    #main{
+        position: relative;
+        height: 100vh;
+    }
+    .movie-info{
+        position: relative;
+        padding: 1rem;
+        margin-bottom: 2rem;
+    }
+    .pic-info{
+        margin-top: 1rem;
+        width: 100%;
+        padding: 5px;
+        text-align: justify;
+        background-color: rgba(0, 0, 0, 0);
+        position: unset;
+        /* position: absolute; */
+        /* bottom: 3%;
+        left: 1%; */
+    }
+    .pic-info p{
+        margin: 1.5rem 0;
+    }
     .movie-card{
         position: relative;    
         border-radius: 5px;

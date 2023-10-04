@@ -20,21 +20,22 @@
                 <button onclick="search()">Search</button>
             </div>
             <div class="sorting">
-                <button onclick="sortByD()">Sort by date (oldest to latest)</button>
-                <button onclick="sortByR()">Sort by rating (least to most)</button>
+                <button id="bydate" class="btnn" onclick="sortByD()">Sort by date (oldest to latest)</button>
+                <button id="byrate" class="btnn" onclick="sortByR()">Sort by rating (least to most)</button>
             </div>
         </div>
         <div class="btn">
-            <button class="active-tab" onclick="allMovie()">All</button>
-            <button onclick="favoriteMovie()">Favorites</button>
+            <button id="all" class="btnn" class="active-tab" onclick="allPage()">All</button>
+            <button id="like" class="btnn" onclick="favoriteMovie()">Favorites</button>
+            <button id="back" class="btnn" onclick="backPage()">back</button>
         </div>
         <ul id="movie-list">  
     
         </ul>
         <div class="pagination">
-            <button id="backbtn">Previous</button>
+            <button id="backbtn" class="prev">Previous</button>
             <button id="pageNum">Current Page: 1</button>
-            <button id="nextbtn"><a href="#head">Next</a></button>
+            <button id="nextbtn" class="next"><a href="#head">Next</a></button>
         </div>
         <footer>
             <p>© 2023 Movie Deck</p>
