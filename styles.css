@@ -170,6 +170,12 @@ header h1 a{
     font-size: 2rem;
     
 }
+.heart{
+    z-index: 5;
+}
+.loved{
+    color: rgb(230, 25, 59);
+}
 .heart i{
     /* background-color: pink; */
     border-radius: 50%;

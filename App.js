@@ -119,7 +119,7 @@ function allMovie(movieData) {
         <div id="${val.id}" class="movie-card" onclick="clickFunc(event)" >
             <img src="https://image.tmdb.org/t/p/original${val.poster_path}" alt="Images"/>
             <h3>${val.title}</h3>
-            <span class="heart"><i class="ri-heart-line"></i></span>
+            <span class="heart" id="${val.id+1}" onclick="liked(event)"><i class="ri-heart-line"></i></span>
             <h4>Votes: ${val.vote_count}</h4>
             <h4>Rating: ${val.vote_average}</h4>
         </div>
@@ -145,6 +145,23 @@ backbtn.addEventListener("click", () => {
         getMovie();
     }
 });
+
+async function liked(e){
+    e.stopPropagation();
+    let getData = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=f531333d637d0c44abc85b3e74db2186&language=en-US&page=${pageNumber}`);
+    let data = await getData.json();
+    let likeData=data.results;
+    document.querySelector(".heart").innerHTML="";
+    likeData.forEach((val, index)=>{
+        if(val.id+1 == e.target.offsetParent.id){
+            document.querySelector(".heart").classList.add("loved");
+            document.querySelector(".heart").innerHTML=`<i class="ri-heart-fill"></i>`;
+        }
+    });
+    console.log(e.target.offsetParent.id);
+
+}
+
 
 async function searchFromApi() {
     movieList.innerHTML = "";
@@ -236,6 +253,8 @@ function sortByR(){
         fevorite = false;
         rCount++;
         document.getElementById("byrate").classList.add("active-tab");
+        document.getElementById("bydate").classList.remove("active-tab");
+        dCount=0;
         getMovie();
     }
     else{
@@ -257,6 +276,8 @@ function sortByD(){
         fevorite = false;
         dCount++;
         document.getElementById("bydate").classList.add("active-tab");
+        document.getElementById("byrate").classList.remove("active-tab");
+        rCount=0;
         getMovie();
     }
     else{
