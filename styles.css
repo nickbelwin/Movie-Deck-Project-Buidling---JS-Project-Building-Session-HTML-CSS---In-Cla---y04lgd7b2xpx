@@ -20,7 +20,7 @@ header h1 a{
     text-decoration: none;
     color: rgb(250, 143, 3);
     font-weight: 700;
-    font-size: 4rem;
+    font-size: 4vw;
 }
 .filter{
     margin-top: 2rem;
@@ -68,6 +68,7 @@ header h1 a{
     font-weight: 600;
     border-radius: 5px;
     transition: .5s;
+    margin-left: 30px;
 }
 #back:hover{
     background-color: rgb(250, 143, 3);
@@ -84,6 +85,21 @@ header h1 a{
     border: 2px solid rgb(250, 143, 3);
     color: white;
 
+}
+#headingLine{
+    display: none;
+    width: 100vw;
+    justify-content: center;
+    padding: 1rem 0;
+    text-align: center;
+    color: white;
+    margin-bottom: 2rem;
+}
+#headingLine h1{
+    border-radius: 10px;
+    padding: 0 1rem;
+    background: transparent;
+    box-shadow: rgb(10, 0, 255) 1px 13px 14px -7px;
 }
 .active-tab{
     background-color: rgb(250, 143, 3);
@@ -248,6 +264,12 @@ footer{
     #main{
         position: relative;
         height: 100vh;
+    }
+    header h1 a{
+        font-size: 10vw;
+    }
+    .btn{
+        margin: 30px 0 30px 30px;
     }
     .movie-info{
         position: relative;
