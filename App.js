@@ -380,6 +380,15 @@ nextbtn.addEventListener("click", () => {
     document.getElementById("pageNum").innerText = `Current Page: ${pageNumber}`;
     getMovie();
 });
+// window.addEventListener('beforeunload', () => {
+//     console.log('User clicked back button');
+//     if (pageNumber > 1) {
+//         pageNumber = pageNumber - 1;
+//         document.getElementById("pageNum").innerText = `Current Page: ${pageNumber}`;
+//         getMovie();
+//     }
+//   });
+
 backbtn.addEventListener("click", () => {
     if (pageNumber > 1) {
         pageNumber = pageNumber - 1;
