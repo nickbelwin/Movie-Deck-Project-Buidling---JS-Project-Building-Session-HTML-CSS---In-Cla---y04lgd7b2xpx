@@ -19,11 +19,16 @@ header{
     box-shadow: rgb(10, 0, 255) 0px 15px 35px -5px;
 }
 header h1 a{
+    display: flex;
+    align-items: center;
     font-family: "Fuggles";
     text-decoration: none;
     color: rgb(250, 143, 3);
     font-weight: 700;
     font-size: 4vw;
+}
+header h1 a img{
+    width: 6%;
 }
 #backButton{
     display: none;
