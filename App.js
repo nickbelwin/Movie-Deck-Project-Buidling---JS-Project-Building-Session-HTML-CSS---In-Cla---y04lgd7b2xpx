@@ -1,7 +1,7 @@
 let all = true;
 let sortByDate = false;
 let sortByRate = false;
-let fevorite = false;
+let favorite = false;
 
 let pageNumber = 1;
 const movieList = document.getElementById("movie-list");
@@ -140,7 +140,7 @@ function allPage(){
     all = true;
     sortByDate = false;
     sortByRate = false;
-    fevorite = false;
+    favorite = false;
     rCount=0;
     dCount=0;
     document.getElementById("byrate").classList.remove("active-tab");
@@ -149,7 +149,6 @@ function allPage(){
     document.querySelector(".filter").style.display="flex";
     document.querySelector(".pagination").style.display="flex";
     getMovie();
-    fevList();
 }
 
 // Sort by date code..........................................
@@ -158,7 +157,7 @@ function sortByD(){
         all = false;
         sortByDate = true;
         sortByRate = false;
-        fevorite = false;
+        favorite = false;
         dCount++;
         document.getElementById("bydate").classList.add("active-tab");
         document.getElementById("byrate").classList.remove("active-tab");
@@ -169,7 +168,7 @@ function sortByD(){
         all = true;
         sortByDate = false;
         sortByRate = false;
-        fevorite = false;
+        favorite = false;
         dCount--;
         document.getElementById("bydate").classList.remove("active-tab");
         getMovie();
@@ -223,7 +222,7 @@ function sortByR(){
         all = false;
         sortByDate = false;
         sortByRate = true;
-        fevorite = false;
+        favorite = false;
         rCount++;
         document.getElementById("byrate").classList.add("active-tab");
         document.getElementById("bydate").classList.remove("active-tab");
@@ -234,7 +233,7 @@ function sortByR(){
         all = true;
         sortByDate = false;
         sortByRate = false;
-        fevorite = false;
+        favorite = false;
         rCount--;
         document.getElementById("byrate").classList.remove("active-tab");
         getMovie();
@@ -278,20 +277,21 @@ function sortByRating(data){
 
 // favorite movies code---------------------------------------------
 let arrFevorite=[];
-let fevoriteId=[];
+let favoriteId=[];
 function liked(e){
+    e.stopPropagation();
     favorite=true;
     let loveId=e.target.parentElement.offsetParent.id;
-    fevoriteId.push(e.target.offsetParent.id);
+    favoriteId.push(loveId);
     document.getElementById(e.target.offsetParent.id).innerHTML=`<i class="ri-heart-fill"></i>`;
+    console.log(favoriteId);
     console.log(loveId);
     likedMovi(loveId);
 }
-function fevList(){
-    fevoriteId.forEach((id)=>{
-        document.getElementById(id).innerHTML=`<i class="ri-heart-fill"></i>`;
-    })
+
+function fevList(movieData){
 }
+
 async function likedMovi(loveId){
     let getData = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=f531333d637d0c44abc85b3e74db2186&language=en-US&page=${pageNumber}`);
     let data = await getData.json();
@@ -330,7 +330,7 @@ async function clickFunc(e){
     let getData = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=f531333d637d0c44abc85b3e74db2186&language=en-US&page=${pageNumber}`);
     let data = await getData.json();
     let userData=data.results;
-    userData.forEach((val, index)=>{
+    userData?.forEach((val, index)=>{
         if(val.id == e.target.offsetParent.id){
             // let movieInfo=userData[index];
             document.querySelector(".filter").style.display="none";

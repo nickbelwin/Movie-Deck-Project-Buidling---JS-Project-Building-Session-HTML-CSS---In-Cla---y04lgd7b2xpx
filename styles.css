@@ -140,7 +140,7 @@ header h1 a img{
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 28px;
 }
 .notFound{
     color: white;
@@ -291,10 +291,13 @@ footer{
         display: flex;
         justify-content: space-between;
         align-items: baseline;
-        padding: 3vh 8vw;
+        padding: 1vh 8vw;
     }
     header h1 a{
         font-size: 10vw;
+    }
+    header h1 a img {
+        width: 9%;
     }
     #backButton{
         display: block;
