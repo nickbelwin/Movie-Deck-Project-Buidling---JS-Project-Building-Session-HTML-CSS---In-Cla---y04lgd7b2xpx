@@ -6,6 +6,7 @@ let fevorite = false;
 let pageNumber = 1;
 const movieList = document.getElementById("movie-list");
 
+// Render home page movies..............
 async function getMovie() {
     let getData = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=f531333d637d0c44abc85b3e74db2186&language=en-US&page=${pageNumber}`);
     let data = await getData.json();
@@ -23,104 +24,20 @@ async function getMovie() {
         document.getElementById("all").classList.add("active-tab");
     }
 }
-let arrFevorite=[];
-let fevoriteId=[];
-function liked(e){
-    favorite=true;
-    let loveId=e.target.parentElement.offsetParent.id;
-    fevoriteId.push(e.target.offsetParent.id);
-    document.getElementById(e.target.offsetParent.id).innerHTML=`<i class="ri-heart-fill"></i>`;
-    console.log(loveId);
-    likedMovi(loveId);
-}
-function fevList(){
-    fevoriteId.forEach((id)=>{
-        document.getElementById(id).innerHTML=`<i class="ri-heart-fill"></i>`;
-    })
-}
-async function likedMovi(loveId){
-    let getData = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=f531333d637d0c44abc85b3e74db2186&language=en-US&page=${pageNumber}`);
-    let data = await getData.json();
-    let userData=data.results;
-    userData.forEach((val)=>{
-        if(val.id == loveId){
-            arrFevorite.push(val);
-        }
-    });
-    console.log(arrFevorite);
-}
-function favoriteMovie(){
-    document.querySelector(".pagination").style.display="none";
-    document.getElementById("like").classList.add("active-tab");
-    document.getElementById("back").style.display="block";
-    document.getElementById("all").style.display="none";
-    document.querySelector(".filter").style.display="none";
-    document.getElementById('headingLine').style.display="flex";
-    movieList.innerHTML="";
-    arrFevorite.forEach((val)=>{
-        movieList.innerHTML += `<li>
-        <div id="${val.id}" class="movie-card" onclick="clickFunc(event)" >
-            <img src="https://image.tmdb.org/t/p/original${val.poster_path}" alt="Images"/>
-            <h3>${val.title}</h3>
-            <span class="heart" id="${val.id+1}" onclick="liked(event)"><i class="ri-heart-fill"></i></span>
-            <h4>Votes: ${val.vote_count}</h4>
-            <h4>Rating: ${val.vote_average}</h4>
-        </div>
-    </li>`
-    });
-}
-async function clickFunc(e){
-    e.stopPropagation();
-    let getData = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=f531333d637d0c44abc85b3e74db2186&language=en-US&page=${pageNumber}`);
-    let data = await getData.json();
-    let userData=data.results;
-    userData.forEach((val, index)=>{
-        if(val.id == e.target.offsetParent.id){
-            // let movieInfo=userData[index];
-            document.querySelector(".filter").style.display="none";
-            document.getElementById('all').style.display="none";
-            document.getElementById('like').style.display="none";
-            document.querySelector(".pagination").style.display="none";
-            document.getElementById('back').style.display="block";
-        
-            movieList.innerHTML=`
-            <div id="${val.id}" class="movie-info">
-            <img src="https://image.tmdb.org/t/p/original${val.backdrop_path}" alt="Images"/>
-            <div class="pic-info">
-            <h3>${val.title}</h3>
-            <p>${val.overview}</p>
-            <h4>Votes: ${val.vote_count}</h4>
-            <h4>Rating: ${val.vote_average}</h4>
-            </div>
-        </div>`
-        }
-    })
-// let back=document.getElementById("back");
-// back.addEventListener("click", backPage);
-    // console.log(e.target.offsetParent.id);
-}
-
-function backPage(){
-    document.querySelector(".filter").style.display="flex";
-    document.getElementById('all').style.display="flex";
-    document.getElementById('like').style.display="flex";
-    document.querySelector(".pagination").style.display="flex";
-    document.getElementById('back').style.display="none";
-    document.getElementById('headingLine').style.display="none";
-    document.getElementById("like").classList.remove("active-tab");
-    getMovie()
-}
-
 function allMovie(movieData) {
     // console.log(movieData);
     movieList.innerHTML = "";
     if(pageNumber===1){
         document.getElementById("backbtn").disabled = true;
         document.getElementById("backbtn").classList.remove("prev");
+        document.getElementById("backButton").disabled = true;
+        document.getElementById("backButton").classList.remove("prev");
     }
     else{
         document.getElementById("backbtn").disabled = false;
         document.getElementById("backbtn").classList.add("prev");
+        document.getElementById("backButton").disabled = false;
+        document.getElementById("backButton").classList.add("prev");
     }
     if(pageNumber===3){
         document.getElementById("nextbtn").disabled = true;
@@ -143,25 +60,29 @@ function allMovie(movieData) {
     });
 }
 getMovie();
-let checkData = "";
 
-const nextbtn = document.getElementById("nextbtn");
-const backbtn = document.getElementById("backbtn");
-nextbtn.addEventListener("click", () => {
-    if (pageNumber >= 1 && pageNumber < 3) {
-        pageNumber = pageNumber + 1;
-    }
-    document.getElementById("pageNum").innerText = `Current Page: ${pageNumber}`;
-    getMovie();
+// searching movies code........................
+let checkData = "";
+window.addEventListener("click",()=>{
+    document.getElementById("searching").classList.remove("searchtag")
 });
-backbtn.addEventListener("click", () => {
-    if (pageNumber > 1) {
-        pageNumber = pageNumber - 1;
-        document.getElementById("pageNum").innerText = `Current Page: ${pageNumber}`;
+
+function search() {
+    if(checkData){
+        searchFromApi();
+    }
+}
+
+function searchData() {
+    document.getElementById("searching").classList.add("searchtag");
+    console.log("search val: ", document.getElementById("searching").value);
+    if (document.getElementById("searching").value == ""){
         getMovie();
     }
-});
-
+    else {
+        checkData = document.getElementById("searching").value;
+    }
+}
 
 async function searchFromApi() {
     movieList.innerHTML = "";
@@ -210,68 +131,28 @@ function showData(page) {
     }
 }
 
-function searchData() {
-    document.getElementById("searching").classList.add("searchtag");
-    console.log("search val: ", document.getElementById("searching").value);
-    if (document.getElementById("searching").value == "") {
-        getMovie();
-    }
-    else {
-        checkData = document.getElementById("searching").value;
-    }
-}
-function search() {
-    if(checkData){
-        searchFromApi();
-    }
-}
-window.addEventListener("click",()=>{
-    document.getElementById("searching").classList.remove("searchtag")
-})
-
+// Sorting code...............................................
 let rCount=0;
 let dCount=0
 let allCount=0;
+// Render all movies by all button..............................
 function allPage(){
-        all = true;
-        sortByDate = false;
-        sortByRate = false;
-        fevorite = false;
-        rCount=0;
-        dCount=0;
-        document.getElementById("byrate").classList.remove("active-tab");
-        document.getElementById("bydate").classList.remove("active-tab");
-        document.getElementById("like").classList.remove("active-tab");
-        document.querySelector(".filter").style.display="flex";
-        document.querySelector(".pagination").style.display="flex";
-        getMovie();
-        fevList();
+    all = true;
+    sortByDate = false;
+    sortByRate = false;
+    fevorite = false;
+    rCount=0;
+    dCount=0;
+    document.getElementById("byrate").classList.remove("active-tab");
+    document.getElementById("bydate").classList.remove("active-tab");
+    document.getElementById("like").classList.remove("active-tab");
+    document.querySelector(".filter").style.display="flex";
+    document.querySelector(".pagination").style.display="flex";
+    getMovie();
+    fevList();
 }
 
-
-function sortByR(){
-    if(rCount===0){
-        all = false;
-        sortByDate = false;
-        sortByRate = true;
-        fevorite = false;
-        rCount++;
-        document.getElementById("byrate").classList.add("active-tab");
-        document.getElementById("bydate").classList.remove("active-tab");
-        dCount=0;
-        getMovie();
-    }
-    else{
-        all = true;
-        sortByDate = false;
-        sortByRate = false;
-        fevorite = false;
-        rCount--;
-        document.getElementById("byrate").classList.remove("active-tab");
-        getMovie();
-    }
-}
-
+// Sort by date code..........................................
 function sortByD(){
     if(dCount===0){
         all = false;
@@ -336,6 +217,30 @@ function sortWithDate(data){
     // console.log("sortWithDate",date);
 }
 
+// Sort by rating code...............................................
+function sortByR(){
+    if(rCount===0){
+        all = false;
+        sortByDate = false;
+        sortByRate = true;
+        fevorite = false;
+        rCount++;
+        document.getElementById("byrate").classList.add("active-tab");
+        document.getElementById("bydate").classList.remove("active-tab");
+        dCount=0;
+        getMovie();
+    }
+    else{
+        all = true;
+        sortByDate = false;
+        sortByRate = false;
+        fevorite = false;
+        rCount--;
+        document.getElementById("byrate").classList.remove("active-tab");
+        getMovie();
+    }
+}
+
 function sortByRating(data){
     let rate= data.sort((a,b)=>{
         return a.vote_average - b.vote_average;
@@ -371,10 +276,130 @@ function sortByRating(data){
     });
 }
 
+// favorite movies code---------------------------------------------
+let arrFevorite=[];
+let fevoriteId=[];
+function liked(e){
+    favorite=true;
+    let loveId=e.target.parentElement.offsetParent.id;
+    fevoriteId.push(e.target.offsetParent.id);
+    document.getElementById(e.target.offsetParent.id).innerHTML=`<i class="ri-heart-fill"></i>`;
+    console.log(loveId);
+    likedMovi(loveId);
+}
+function fevList(){
+    fevoriteId.forEach((id)=>{
+        document.getElementById(id).innerHTML=`<i class="ri-heart-fill"></i>`;
+    })
+}
+async function likedMovi(loveId){
+    let getData = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=f531333d637d0c44abc85b3e74db2186&language=en-US&page=${pageNumber}`);
+    let data = await getData.json();
+    let userData=data.results;
+    userData.forEach((val)=>{
+        if(val.id == loveId){
+            arrFevorite.push(val);
+        }
+    });
+    console.log(arrFevorite);
+}
+function favoriteMovie(){
+    document.querySelector(".pagination").style.display="none";
+    document.getElementById("like").classList.add("active-tab");
+    document.getElementById("back").style.display="block";
+    document.getElementById("all").style.display="none";
+    document.querySelector(".filter").style.display="none";
+    document.getElementById('headingLine').style.display="flex";
+    movieList.innerHTML="";
+    arrFevorite.forEach((val)=>{
+        movieList.innerHTML += `<li>
+        <div id="${val.id}" class="movie-card" onclick="clickFunc(event)" >
+            <img src="https://image.tmdb.org/t/p/original${val.poster_path}" alt="Images"/>
+            <h3>${val.title}</h3>
+            <span class="heart" id="${val.id+1}" onclick="liked(event)"><i class="ri-heart-fill"></i></span>
+            <h4>Votes: ${val.vote_count}</h4>
+            <h4>Rating: ${val.vote_average}</h4>
+        </div>
+    </li>`
+    });
+}
 
+// render page after click on movie -----------------------------------------------------
+async function clickFunc(e){
+    e.stopPropagation();
+    let getData = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=f531333d637d0c44abc85b3e74db2186&language=en-US&page=${pageNumber}`);
+    let data = await getData.json();
+    let userData=data.results;
+    userData.forEach((val, index)=>{
+        if(val.id == e.target.offsetParent.id){
+            // let movieInfo=userData[index];
+            document.querySelector(".filter").style.display="none";
+            document.getElementById('all').style.display="none";
+            document.getElementById('like').style.display="none";
+            document.querySelector(".pagination").style.display="none";
+            document.getElementById('back').style.display="block";
+        
+            movieList.innerHTML=`
+            <div id="${val.id}" class="movie-info">
+            <img src="https://image.tmdb.org/t/p/original${val.backdrop_path}" alt="Images"/>
+            <div class="pic-info">
+            <h3>${val.title}</h3>
+            <p>${val.overview}</p>
+            <h4>Votes: ${val.vote_count}</h4>
+            <h4>Rating: ${val.vote_average}</h4>
+            </div>
+        </div>`
+        }
+    })
 
-// fevorite list of movie----------------------------------------
+// console.log(e.target.offsetParent.id);
+}
 
+// back button when user enter in favorite movie list and in specific movie---------------------------------
+function backPage(){
+    document.querySelector(".filter").style.display="flex";
+    document.getElementById('all').style.display="flex";
+    document.getElementById('like').style.display="flex";
+    document.querySelector(".pagination").style.display="flex";
+    document.getElementById('back').style.display="none";
+    document.getElementById('headingLine').style.display="none";
+    document.getElementById("like").classList.remove("active-tab");
+    getMovie()
+}
+
+// next button, previous button and back button when mobile site open code--------------------------------
+const nextbtn = document.getElementById("nextbtn");
+const backbtn = document.getElementById("backbtn");
+nextbtn.addEventListener("click", () => {
+    if (pageNumber >= 1 && pageNumber < 3) {
+        pageNumber = pageNumber + 1;
+    }
+    if(pageNumber>=2){
+        document.getElementById("backButton").style.opacity="1";
+    }
+    document.getElementById("pageNum").innerText = `Current Page: ${pageNumber}`;
+    getMovie();
+});
+backbtn.addEventListener("click", () => {
+    if (pageNumber > 1) {
+        pageNumber = pageNumber - 1;
+        document.getElementById("pageNum").innerText = `Current Page: ${pageNumber}`;
+        getMovie();
+    }
+});
+
+// back button when mobile site open---------------------------------
+function backBtn(e) {
+    console.log(e)
+    if (pageNumber > 1) {
+        pageNumber = pageNumber - 1;
+        document.getElementById("pageNum").innerText = `Current Page: ${pageNumber}`;
+        getMovie();
+    }
+    if(pageNumber===1){
+        document.getElementById("backButton").style.opacity="0";
+    }
+}
 
 
 
