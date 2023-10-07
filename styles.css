@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Fuggles&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -21,7 +23,7 @@ header{
 header h1 a{
     display: flex;
     align-items: center;
-    font-family: "Fuggles";
+    font-family: 'Fuggles', cursive;
     text-decoration: none;
     color: rgb(250, 143, 3);
     font-weight: 700;
